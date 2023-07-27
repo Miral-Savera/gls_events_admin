@@ -5,7 +5,7 @@ function Breadcrumbs() {
         <div>
             <div class="content-header row">
                 <div class="content-header-left col-md-4 col-12 mb-2">
-                    <h3 class="content-header-title">Charts</h3>
+                    <h3 class="content-header-title">Dashboard</h3>
                 </div>
                 <div class="content-header-right col-md-8 col-12">
                     <div class="breadcrumbs-top float-md-right">
