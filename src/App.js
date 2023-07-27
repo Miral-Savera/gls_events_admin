@@ -15,9 +15,7 @@ function App() {
                     <div className="content-wrapper-before"></div>
                     <Breadcrumbs />
                     <div className="content-body">
-                        <section id="chartjs-bar-charts">
-                            <Dashboard/>
-                        </section>
+                        <Dashboard/>
                     </div>
                 </div>
             </div>
