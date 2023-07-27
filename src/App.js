@@ -4,16 +4,17 @@ import Dashboard from './components/Dashboard';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
+
 function App() {
     return (
         <>
             <Navbar />
             <Sidebar />
-            <div class="app-content content">
-                <div class="content-wrapper">
-                    <div class="content-wrapper-before"></div>
+            <div className="app-content content">
+                <div className="content-wrapper">
+                    <div className="content-wrapper-before"></div>
                     <Breadcrumbs />
-                    <div class="content-body">
+                    <div className="content-body">
                         <section id="chartjs-bar-charts">
                             <Dashboard/>
                         </section>
