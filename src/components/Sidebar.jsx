@@ -15,7 +15,6 @@ function Sidebar() {
                     <ul className="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
                         <li className=" nav-item"><a href="index.html"><i className="ft-home"></i><span className="menu-title" data-i18n="">Dashboard</span></a>
                         </li>
-                        
                     </ul>
                 </div>
                 <div className="navigation-background"></div>

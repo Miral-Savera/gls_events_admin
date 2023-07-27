@@ -25,9 +25,7 @@ function Navbar() {
                                     </ul>
                                 </li>
                             </ul>
-                            
                             <ul className="nav navbar-nav float-right">
-                                
                                 <li className="dropdown dropdown-user nav-item"><a className="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">             <span className="avatar avatar-online"><img src="theme-assets/images/portrait/small/avatar-s-19.png" alt="avatar" /><i></i></span></a>
                                     <div className="dropdown-menu dropdown-menu-right">
                                         <div className="arrow_box_right"><a className="dropdown-item" href="#"><span className="avatar avatar-online"><img src="theme-assets/images/portrait/small/avatar-s-19.png" alt="avatar" /><span className="user-name text-bold-700 ml-1">John Doe</span></span></a>
