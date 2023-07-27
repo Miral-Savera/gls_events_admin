@@ -3,24 +3,24 @@ import React from 'react'
 function Dashboard() {
   return (
     <div>
-      <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Column Chart</h4>
-                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                        <div class="heading-elements">
-                            <ul class="list-inline mb-0">
-                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                <li><a data-action="close"><i class="ft-x"></i></a></li>
+      <div className="row">
+            <div className="col-12">
+                <div className="card">
+                    <div className="card-header">
+                        <h4 className="card-title">Column Chart</h4>
+                        <a href="#" className="heading-elements-toggle"><i className="la la-ellipsis-v font-medium-3"></i></a>
+                        <div className="heading-elements">
+                            <ul className="list-inline mb-0">
+                                <li><a href="#" data-action="collapse"><i className="ft-minus"></i></a></li>
+                                <li><a href="#" data-action="reload"><i className="ft-rotate-cw"></i></a></li>
+                                <li><a href="#" data-action="expand"><i className="ft-maximize"></i></a></li>
+                                <li><a href="#" data-action="close"><i className="ft-x"></i></a></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="card-content collapse show">
-                        <div class="card-body">
-                            <div class="height-400">
+                    <div className="card-content collapse show">
+                        <div className="card-body">
+                            <div className="height-400">
                                 <canvas id="column-chart"></canvas>
                             </div>
                         </div>
