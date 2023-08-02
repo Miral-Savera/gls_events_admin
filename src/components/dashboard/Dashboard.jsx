@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch,useSelector } from "react-redux";
 import { fetchEvents } from "../../redux/slice/event";
 import { useLocation } from 'react-router-dom';
+import UpcomingEvents from './UpcomingEvents';
 
 function Dashboard() {
 
@@ -20,7 +21,7 @@ function Dashboard() {
         <>
             <section id="chartjs-bar-charts">
                 <div className="row">
-                    <div className="col-md-4">
+                    <div className="col-md-3">
                         <div className="card">
                             <div className="card-header">
                                 <h4 className="card-title">Organized Events</h4>
@@ -32,7 +33,7 @@ function Dashboard() {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-3">
                         <div className="card">
                             <div className="card-header">
                                 <h4 className="card-title">Upcoming Events</h4>
@@ -44,7 +45,20 @@ function Dashboard() {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-3">
+                        <div className="card">
+                            <div className="card-header">
+                                <h4 className="card-title">Total Departments</h4>
+                                <a href="/" className="heading-elements-toggle"><i className="la la-ellipsis-v font-medium-3"></i></a>
+                            </div>
+                            <div className="card-content collapse show">
+                                <div className="card-body">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-3">
                         <div className="card">
                             <div className="card-header">
                                 <h4 className="card-title">Available Coordinators</h4>
@@ -60,18 +74,30 @@ function Dashboard() {
                 </div>
             </section>
 
-            <section id="chartjs-bar-charts">
+            <section id="">
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-md-6">
                         <div className="card">
                             <div className="card-header">
-                                <h4 className="card-title">Organized Events</h4>
+                                <h4 className="card-title">Report</h4>
                                 <a href="/" className="heading-elements-toggle"><i className="la la-ellipsis-v font-medium-3"></i></a>
                             </div>
                             <div className="card-content collapse show">
                                 <div className="card-body">
-                                    {state.event.data && state.event.data.map((e) => <li>{e.title}</li>)}
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="card">
+                            <div className="card-header">
+                                <h4 className="card-title">Upcoming Events</h4>
+                                <a href="/" className="heading-elements-toggle"><i className="la la-ellipsis-v font-medium-3"></i></a>
+                            </div>
+                            <div className="card-content collapse show">
+                                <div className="card-body">
+                                    <UpcomingEvents/>
+                               </div>
                             </div>
                         </div>
                     </div>
