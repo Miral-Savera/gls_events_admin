@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 
 function Navbar() {
+
+    // const location = useLocation();
+    // useEffect( () => {
+    //     //alert(location.pathname)
+    // },[location]);
+
     return (
         <div>
             <nav className="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-semi-light">
