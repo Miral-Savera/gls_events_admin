@@ -1,29 +1,23 @@
 import './App.css';
 import Breadcrumbs from './components/Breadcrumbs';
-import Dashboard from './components/Dashboard';
+import Dashboard from './components/dashboard/Dashboard';
 import Footer from './components/Footer';
+import Home from './components/Home';
+import Login from './components/Login';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 
 function App() {
     return (
         <>
-            <Navbar />
-            <Sidebar />
-            <div className="app-content content">
-                <div className="content-wrapper">
-                    <div className="content-wrapper-before"></div>
-                    <Breadcrumbs />
-                    <div className="content-body">
-                        <section id="chartjs-bar-charts">
-                            <Dashboard/>
-                        </section>
-                    </div>
-                </div>
-            </div>
-
-            <Footer />
-
+            <Router>
+                <Routes>
+                    <Route exact path="/" element={<Login/>} />
+                    <Route exact path="/home" element={<Home/>} />
+                </Routes>
+            </Router>
         </>
     );
 }

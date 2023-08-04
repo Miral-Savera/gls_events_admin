@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.content-wrapper-before{
+  height: 100px !important;
+}
+
+.bg-full-screen-image {
+  background: url('../public/theme-assets/images/backgrounds/bg-18.jpg') center center no-repeat fixed;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
