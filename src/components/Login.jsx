@@ -1,17 +1,40 @@
-import React, { useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import $ from "jquery";
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function Login() {
 
+    const host = "https://gls-events.onrender.com/";
     const navigate = useNavigate();
-    const location = useLocation();
+    const[credential,setCredential] = useState({email : "",password : ""});
 
-    useEffect(()=>{
-        if(location.pathname==='login'){
-            document.body.classList.remove();
-        }
-    },[location]);
+    const onChange = (e) => {
+        setCredential({...credential,[e.target.name] : e.target.value});
+    }
+
+    const onLogin = async (e) => {
+        e.preventDefault();
+        await axios({
+            method: 'post',
+            url: `${host}login`,
+            responseType: 'json',
+            data : credential,
+        })
+        .then(function (response) {
+
+            console.log(response)
+
+            if(response.data.success===true){
+                localStorage.setItem('authtoken',response.data.authtoken);
+                navigate('/home');
+                toast.success("Logged-in Successfully");
+            }
+            else{
+                toast.error(response.data.errors);
+            }
+        });
+    }
 
     return (
         <center className="vertical-layout vertical-menu 1-column bg-full-screen-image blank-page blank-page" data-open="click" data-menu="vertical-menu" data-color="" data-col="1-column">
@@ -35,15 +58,15 @@ function Login() {
                                     <div className="card-content">
 
                                         <div className="card-body">
-                                            <form className="form-horizontal" action="https://demos.themeselection.com/chameleon-admin-template/html/ltr/vertical-menu-template/index.html" novalidate>
+                                            <form className="form-horizontal" onSubmit={onLogin}>
                                                 <fieldset className="form-group position-relative has-icon-left">
-                                                    <input type="text" className="form-control round" id="user-name" placeholder="Your Username" required />
+                                                    <input type="text" className="form-control round" id="email" placeholder="Your Username" name='email' required onChange={onChange} />
                                                         <div className="form-control-position">
                                                             <i className="ft-user"></i>
                                                         </div>
                                                 </fieldset>
                                                 <fieldset className="form-group position-relative has-icon-left">
-                                                    <input type="password" className="form-control round" id="user-password" placeholder="Enter Password" required />
+                                                    <input type="password" className="form-control round" id="password" name='password' placeholder="Enter Password" required onChange={onChange} />
                                                         <div className="form-control-position">
                                                             <i className="ft-lock"></i>
                                                         </div>
@@ -52,7 +75,6 @@ function Login() {
                                                     <div className="col-md-6 col-12 text-center text-sm-left">
 
                                                     </div>
-                                                    <div className="col-md-6 col-12 float-sm-left text-center text-sm-right"><a href="recover-password.html" className="card-link">Forgot Password?</a></div>
                                                 </div>
                                                 <div className="form-group text-center">
                                                     <button type="submit" className="btn round btn-block btn-glow btn-bg-gradient-x-purple-blue col-12 mr-1 mb-1">Login</button>
