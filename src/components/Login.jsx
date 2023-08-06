@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import $ from "jquery";
 
 function Login() {
+
+    useEffect( () => {
+        $('body').removeAttr('data-color');
+    });
 
     const host = "https://gls-events.onrender.com/";
     const navigate = useNavigate();
@@ -23,16 +28,18 @@ function Login() {
         })
         .then(function (response) {
 
-            console.log(response)
-
-            if(response.data.success===true){
-                localStorage.setItem('authtoken',response.data.authtoken);
+            if(response.data.msg=='Login'){
                 navigate('/home');
                 toast.success("Logged-in Successfully");
             }
-            else{
-                toast.error(response.data.errors);
-            }
+
+            // if(response.data.success===true){
+            //     localStorage.setItem('authtoken',response.data.authtoken);
+                
+            // }
+            // else{
+            //     toast.error(response.data.errors);
+            // }
         });
     }
 
