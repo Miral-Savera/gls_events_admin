@@ -17,7 +17,7 @@ function Sidebar() {
                 </div>
                 <div className="main-menu-content">
                     <ul className="navigation">
-                        <li className={`nav-link ${location.pathname === "/" ? "active" : ""} `}>
+                        <li className={`nav-link ${location.pathname === "/home" ? "active" : ""} `}>
                             <Link to="/home"><i className="ft-home"></i><span className="menu-title" data-i18n="">Dashboard</span></Link>
                         </li>
                     </ul>

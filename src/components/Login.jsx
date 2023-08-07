@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
-import { toast } from 'react-toastify';
 import $ from "jquery";
+import { toast } from 'react-toastify';
 
 function Login() {
 
     useEffect( () => {
         $('body').removeAttr('data-color');
+        $('body').removeClass();
     });
 
     const host = "https://gls-events.onrender.com/";
@@ -20,26 +21,25 @@ function Login() {
 
     const onLogin = async (e) => {
         e.preventDefault();
+        
+        $('#loginbtn').attr('disabled','disabled');
+
         await axios({
             method: 'post',
-            url: `${host}login`,
+            url: `${host}admin/login`,
             responseType: 'json',
             data : credential,
         })
         .then(function (response) {
 
-            if(response.data.msg=='Login'){
+            if(response.data.success===true){
+                localStorage.setItem('authtoken',response.data.authtoken);
                 navigate('/home');
                 toast.success("Logged-in Successfully");
             }
-
-            // if(response.data.success===true){
-            //     localStorage.setItem('authtoken',response.data.authtoken);
-                
-            // }
-            // else{
-            //     toast.error(response.data.errors);
-            // }
+            else{
+                toast.error(response.data.errors);
+            }
         });
     }
 
@@ -84,7 +84,7 @@ function Login() {
                                                     </div>
                                                 </div>
                                                 <div className="form-group text-center">
-                                                    <button type="submit" className="btn round btn-block btn-glow btn-bg-gradient-x-purple-blue col-12 mr-1 mb-1">Login</button>
+                                                    <button type="submit" className="btn round btn-block btn-glow btn-bg-gradient-x-purple-blue col-12 mr-1 mb-1" id='loginbtn'>Login</button>
                                                 </div>
 
                                             </form>
