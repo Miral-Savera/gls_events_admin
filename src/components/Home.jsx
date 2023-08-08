@@ -16,6 +16,17 @@ function Home() {
 			navigate('/');
 		}
 
+        let loadTime = new Date();
+        let unloadTime = new Date(JSON.parse(window.localStorage.unloadTime));
+        let refreshTime = loadTime.getTime() - unloadTime.getTime();
+
+        if(refreshTime>1800000)
+        {
+            window.localStorage.removeItem("authtoken");
+            window.localStorage.removeItem("refreshTime");
+            navigate('/');
+        }
+
         $(function () {
             $('body').attr('data-color','bg-gradient-x-purple-blue');
             $('body').addClass('vertical-layout vertical-menu 2-columns fixed-navbar menu-expanded pace-done');

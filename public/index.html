@@ -24,6 +24,15 @@
     <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css" rel="stylesheet">
 
     <title>React App</title>
+
+    <script>
+
+      window.onbeforeunload = function (e) {
+        window.localStorage.unloadTime = JSON.stringify(new Date());
+      };
+
+    </script>
+
   </head>
   <body class="" data-open="click" data-menu="vertical-menu" data-col="2-columns">
     <noscript>You need to enable JavaScript to run this app.</noscript>
