@@ -3,6 +3,7 @@ import { useDispatch,useSelector } from "react-redux";
 import { fetchEvents } from "../../redux/slice/event";
 import { useLocation } from 'react-router-dom';
 import UpcomingEvents from './UpcomingEvents';
+import Breadcrumbs from '../Breadcrumbs';
 
 function Dashboard() {
 
@@ -19,6 +20,7 @@ function Dashboard() {
 
     return (
         <>
+            <Breadcrumbs title="Dashboard" />
             <section id="chartjs-bar-charts">
                 <div className="row">
                     <div className="col-md-3">

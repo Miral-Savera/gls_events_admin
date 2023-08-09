@@ -6,6 +6,7 @@ import Breadcrumbs from './Breadcrumbs';
 import Footer from './Footer';
 import Dashboard from './dashboard/Dashboard';
 import $ from "jquery";
+import Department from './department/Department';
 
 function Home() {
 
@@ -20,11 +21,13 @@ function Home() {
         let unloadTime = new Date(JSON.parse(window.localStorage.unloadTime));
         let refreshTime = loadTime.getTime() - unloadTime.getTime();
 
-        if(refreshTime>1800000)
-        {
-            window.localStorage.removeItem("authtoken");
-            window.localStorage.removeItem("refreshTime");
-            navigate('/');
+        if(refreshTime!==0){
+            if(refreshTime>1800000)
+            {
+                window.localStorage.removeItem("authtoken");
+                window.localStorage.removeItem("refreshTime");
+                navigate('/');
+            }
         }
 
         $(function () {
@@ -40,10 +43,10 @@ function Home() {
             <div className="app-content content">
                 <div className="content-wrapper">
                     <div className="content-wrapper-before"></div>
-                    <Breadcrumbs />
                     <div className="content-body">
                         <Routes>
-                            <Route exact path="/" element={<Dashboard/>} />
+                            <Route exact path="/dashboard" element={<Dashboard/>} />
+                            <Route exact path="/department" element={<Department/>} />
                         </Routes>
                     </div>
                 </div>

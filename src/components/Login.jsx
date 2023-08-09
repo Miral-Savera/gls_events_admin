@@ -33,7 +33,7 @@ function Login() {
 
             if(response.data.success===true){
                 localStorage.setItem('authtoken',response.data.authtoken);
-                navigate('/home');
+                navigate('/admin/dashboard');
                 toast.success("Logged-in Successfully");
             }
             else{
