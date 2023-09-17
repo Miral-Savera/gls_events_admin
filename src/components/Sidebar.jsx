@@ -23,6 +23,9 @@ function Sidebar() {
                         <li className={`nav-link ${location.pathname === "/admin/department" ? "active" : ""} `}>
                             <Link to="/admin/department"><i className="ft-cpu"></i><span className="menu-title" data-i18n="">Department</span></Link>
                         </li>
+                        <li className={`nav-link ${location.pathname === "/admin/course" ? "active" : ""} `}>
+                            <Link to="/admin/course"><i className="ft-life-buoy"></i><span className="menu-title" data-i18n="">Course</span></Link>
+                        </li>
                     </ul>
                 </div>
                 <div className="navigation-background"></div>

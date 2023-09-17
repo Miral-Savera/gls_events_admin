@@ -85,7 +85,7 @@ function Dashboard() {
                                 <a href="/" className="heading-elements-toggle"><i className="la la-ellipsis-v font-medium-3"></i></a>
                             </div>
                             <div className="card-content collapse show">
-                                <div className="card-body">
+                                <div className="card-body" style={{height:"325px"}}>
                                 </div>
                             </div>
                         </div>
@@ -97,7 +97,7 @@ function Dashboard() {
                                 <a href="/" className="heading-elements-toggle"><i className="la la-ellipsis-v font-medium-3"></i></a>
                             </div>
                             <div className="card-content collapse show">
-                                <div className="card-body">
+                                <div className="card-body" style={{height:"325px"}}>
                                     <UpcomingEvents/>
                                </div>
                             </div>

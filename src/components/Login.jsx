@@ -43,7 +43,7 @@ function Login() {
     }
 
     return (
-        <center className="vertical-layout vertical-menu 1-column bg-full-screen-image blank-page blank-page" data-open="click" data-menu="vertical-menu" data-color="" data-col="1-column">
+        <center className="vertical-layout vertical-menu 1-column bg-full-screen-image blank-page blank-page" data-open="click" data-menu="vertical-menu" data-color="black" data-col="1-column">
             <div className="app-content content">
                 <div className="content-wrapper">
                     <div className="content-wrapper-before"></div>

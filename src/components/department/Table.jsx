@@ -1,55 +1,59 @@
-import React from 'react'
+import React, { useEffect } from 'react';
+import { useDispatch,useSelector } from "react-redux";
+import { fetchDepts } from '../../redux/slice/department';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function Table() {
+
+    let deptCount = 1;
+    const host = "https://gls-events.onrender.com/admin/";
+    
+    let location = useLocation();
+    const dispatch = useDispatch(); 
+    const state = useSelector((state) => state);
+    useEffect( () => {
+        dispatch(fetchDepts());
+    },[location]);
+
+    const deleteDepartment = async(id) => {
+        await axios({
+            method: 'delete',
+            url: `${host}department/delete/${id}`,
+            responseType: 'json',
+            headers: {'auth-token': localStorage.getItem('authtoken')}
+        })
+        .then(function (response) {
+            dispatch(fetchDepts());
+            toast.success("Department Deleted Successfully");
+        });  
+    }
+
     return (
-        <div>
-            <div className="content-body">
-                <section id="configuration">
-                    <div className="row">
-                        <div className="col-12">
-                            <div className="card">
-                                <div className="card-header">
-                                    <h4 className="card-title">
-                                        <button type='button' className='btn btn-bg-gradient-x-purple-blue'>New Department</button>
-                                    </h4>
-                                    <a className="heading-elements-toggle"><i
-                                        className="la la-ellipsis-v font-medium-3"></i></a>
-                                    <div className="heading-elements">
-                                        <ul className="list-inline mb-0">
-                                            <li><a data-action="collapse"><i className="ft-minus"></i></a></li>
-                                            <li><a data-action="reload"><i className="ft-rotate-cw"></i></a></li>
-                                            <li><a data-action="expand"><i className="ft-maximize"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div className="card-content collapse show">
-                                    <div className="card-body card-dashboard">
-                                        <div className="table-responsive">
-                                            <table className="table table-striped table-bordered zero-configuration">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Name</th>
-                                                        <th>Position</th>
-                                                        <th>Office</th>
-                                                        <th>Age</th>
-                                                        <th>Start date</th>
-                                                        <th>Salary</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-            </div>
-        </div>
+        <table className="table table-striped table-bordered zero-configuration" id='deptTable'>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Department Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {state.department.data && state.department.data.map( (dept) => {
+                    return <tr key={deptCount}>
+                                <td>{deptCount++}</td>
+                                <td>{dept.dept_name}</td>
+                                <td>
+                                    <a href="#" className="btn btn-danger btn-sm" onClick={ () => {deleteDepartment(dept._id)}}><i className="bi bi-trash3"></i></a> 
+                                    <a href="#" className="btn btn-primary btn-sm mx-1"><i className="bi bi-pencil-square"></i></a>
+                                </td>
+                            </tr>
+                })}
+            </tbody>
+        </table>
+    
     )
 }
 
