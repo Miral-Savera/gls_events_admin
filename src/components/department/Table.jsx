@@ -4,6 +4,7 @@ import { fetchDepts } from '../../redux/slice/department';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import $ from "jquery";
 
 function Table() {
 
@@ -30,6 +31,10 @@ function Table() {
         });  
     }
 
+    const editDepartment = async(id) => {
+        window.$('#departmentModal').modal('show');
+    }
+
     return (
 
         <table className="table table-striped table-bordered zero-configuration" id='deptTable'>
@@ -47,7 +52,7 @@ function Table() {
                                 <td>{dept.dept_name}</td>
                                 <td>
                                     <a href="#" className="btn btn-danger btn-sm" onClick={ () => {deleteDepartment(dept._id)}}><i className="bi bi-trash3"></i></a> 
-                                    <a href="#" className="btn btn-primary btn-sm mx-1"><i className="bi bi-pencil-square"></i></a>
+                                    <a href="#" className="btn btn-primary btn-sm mx-1" onClick={ () => {editDepartment(dept._id)}}><i className="bi bi-pencil-square"></i></a>
                                 </td>
                             </tr>
                 })}
