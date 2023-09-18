@@ -21,6 +21,7 @@ function Dashboard() {
     return (
         <>
             <Breadcrumbs title="Dashboard" />
+
             <section id="chartjs-bar-charts">
                 <div className="row">
                     <div className="col-md-3">
