@@ -35,7 +35,7 @@ function Department(props) {
     const hanleClick = async(e) => {
         e.preventDefault();
 
-        if(dept.id !== null && dept.dept_name !== null){
+        if(dept.id !== null && dept.id !== "" && dept.dept_name !== null){
 
             await axios({
                 method: 'patch',

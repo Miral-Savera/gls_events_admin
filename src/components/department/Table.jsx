@@ -4,13 +4,11 @@ import { fetchDepts } from '../../redux/slice/department';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import $ from "jquery";
 
 function Table(props) {
 
     let deptCount = 1;
     const host = "https://gls-events.onrender.com/admin/";
-    const [editDept,setEditDept] = useState({id : "",dept_name : ""});
     
     let location = useLocation();
     const dispatch = useDispatch(); 

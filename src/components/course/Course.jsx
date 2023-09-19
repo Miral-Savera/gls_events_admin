@@ -2,26 +2,134 @@ import React, { useEffect, useState } from 'react'
 import Breadcrumbs from '../Breadcrumbs'
 import { useDispatch,useSelector } from "react-redux";
 import { fetchDepts } from '../../redux/slice/department';
+import { fetchCourse } from '../../redux/slice/course';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import $ from "jquery";
+import Table from './Table';
+import Loading from '../Loading';
 
 function Course() {
     
-    const [course,setCourse] = useState({dept_id : "",course_name : ""});
+    const [course,setCourse] = useState({id : "",dept_id : "",course_name : ""});
+    const [isLoading, setIsLoading] = useState(true);
+    const host = "https://gls-events.onrender.com/admin/";
 
     let location = useLocation();
     const dispatch = useDispatch(); 
     const state = useSelector((state) => state);
+    const [departmentNames, setDepartmentNames] = useState({});
 
     useEffect( () => {
         dispatch(fetchDepts());
+        dispatch(fetchCourse());
     },[location]);
+
+    useEffect(() => {
+        const fetchDepartmentNames = async () => {
+            try {
+                const promises = state.course.data.map(async (course) => {
+                    const response = await axios({
+                        method: 'get',
+                        url: `${host}department/getdepartment/${course.dept_id}`,
+                        responseType: 'json',
+                        headers: { 'auth-token': localStorage.getItem('authtoken') },
+                    });
+                    return { id: course.dept_id, name: response.data.dept_name };
+                });
+
+                const departmentNameResults = await Promise.all(promises);
+
+                const departmentNameMap = {};
+                departmentNameResults.forEach((result) => {
+                    departmentNameMap[result.id] = result.name;
+                });
+
+                setDepartmentNames(departmentNameMap);
+                setIsLoading(false); // Set loading state to false when data is fetched
+            } catch (error) {
+                console.error('Error fetching department:', error);
+                setIsLoading(false); // Set loading state to false even on error
+            }
+        };
+
+        if (state.course.data) {
+            fetchDepartmentNames();
+        }
+    }, [state.course.data]);
 
     const onChange = (e) => {
        setCourse({...course,[e.target.name] : e.target.value});
     }
 
-    const hanleClick = () => {
-        
+    const hanleClick = async() => {
+        if(course.id !== "" && course.id !==null && course.dept_id !== "" && course.course_name !== ""){
+
+            await axios({
+                method: 'patch',
+                url: `${host}course/updatecourse/${course.id}`,
+                responseType: 'json',
+                data : course,
+            })
+            .then(function (response) {
+                if(response.data._id && response.data._id != null){
+                    $('select').removeAttr('selected').find('option:first').attr('selected', 'selected');
+                    window.$('#courseModal').modal('hide');
+                    window.$('input').val('');   
+                    toast.success("Course Added Successfully");
+                    dispatch(fetchCourse());
+                }
+            });
+
+        }
+        else{
+            await axios({
+                method: 'post',
+                url: `${host}course/add`,
+                responseType: 'json',
+                data : course,
+            })
+            .then(function (response) {
+                if(response.data._id && response.data._id != null){
+                    $('select').removeAttr('selected').find('option:first').attr('selected', 'selected');
+                    window.$('#courseModal').modal('hide');
+                    window.$('input').val('');   
+                    toast.success("Course Added Successfully");
+                    dispatch(fetchCourse());
+                }
+            });
+        }
+    }
+
+    const deleteDepartment = async(id) => {
+
+        await axios({
+            method: 'delete',
+            url: `${host}course/deletecourse/${id}`,
+            responseType: 'json',
+        })
+        .then(function (response) {
+            if(response.data._id && response.data._id != null){
+                toast.success("Course Deleted Successfully");
+                dispatch(fetchCourse());
+            }
+        });
+
+    }
+
+    const editDepartment = async(id) => {
+        await axios({
+            method: 'get',
+            url: `${host}course/getcourse/${id}`,
+            responseType: 'json',
+        })
+        .then(function (response) {
+            setCourse({dept_id : response.data.dept_id,id : response.data._id});
+            window.$('#dept_id').val(response.data.dept_id);
+            window.$('#course_name').val(response.data.course_name);
+            window.$('#courseModal').modal('show');
+        });
     }
 
     return (
@@ -49,9 +157,12 @@ function Course() {
                                 </div>
                                 <div className="card-content collapse show">
                                     <div className="card-body card-dashboard">
-                                        <div className="table-responsive">
-
-                                        </div>
+                                        {isLoading && <Loading/>}
+                                        {!isLoading && <>
+                                            <div className="table-responsive">
+                                                <Table deleteDepartment={deleteDepartment} editDepartment={editDepartment} departmentNames={departmentNames} />
+                                            </div>
+                                        </>}
                                     </div>
                                 </div>
                             </div>
