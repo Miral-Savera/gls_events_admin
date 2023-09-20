@@ -131,7 +131,6 @@ function Department(props) {
                             </div>
                         </div>
                     </section>
-
                 </div>
             </div>
 
