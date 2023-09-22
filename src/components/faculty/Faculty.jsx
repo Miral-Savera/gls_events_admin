@@ -3,9 +3,11 @@ import Breadcrumbs from '../Breadcrumbs'
 import Table from './Table'
 import { useDispatch,useSelector } from "react-redux";
 import { fetchDepts } from '../../redux/slice/department';
+import { fetchFaculty } from '../../redux/slice/faculty';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Loading from '../Loading';
 
 function Faculty() {
 
@@ -15,9 +17,12 @@ function Faculty() {
     const host = "https://gls-events.onrender.com/admin/";
 
     const [faculty,setFaculty] = useState({id : "",firstname : "",lastname : "",email : "",phone : "",role : "",department_faculty : ""});
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect( () => {
         dispatch(fetchDepts());
+        dispatch(fetchFaculty());
+        setIsLoading(false);
     },[location]);
 
     const onChange = (e) => {
@@ -35,11 +40,12 @@ function Faculty() {
             })
             .then(function (response) {
                 if(response.data._id&& response.data._id !== null){
-                    // dispatch(fetchDepts());
+                    dispatch(fetchDepts());
                     window.$('#facultyModal').modal('hide');
                     window.$('input').val(''); 
                     setFaculty({id:null}); 
                     toast.success("Faculty Updated Successfully");
+                    setIsLoading(false);
                 }
             });
         }
@@ -52,15 +58,33 @@ function Faculty() {
             })
             .then(function (response) {
                 if(response.data._id && response.data._id != null){
-                    // dispatch(fetchDepts());
+                    dispatch(fetchDepts());
                     window.$('#facultyModal').modal('hide');
                     window.$('input').val(''); 
                     setFaculty({id:null}); 
                     toast.success("Faculty Added Successfully");
+                    setIsLoading(false);
                 }
             });
         }
+    }
 
+    const editDepartment = (id) => {
+
+    }
+
+    const deleteDepartment = async(id) => {
+        await axios({
+            method: 'delete',
+            url: `${host}faculty/deletefaculty/${id}`,
+            responseType: 'json',
+        })
+        .then(function (response) {
+            if(response.data._id && response.data._id != null){
+                dispatch(fetchFaculty());
+                toast.success("Faculty Deleted Successfully");
+            }
+        });
     }
 
     return (
@@ -88,14 +112,13 @@ function Faculty() {
                                 <div className="card-content collapse show">
                                     <div className="card-body card-dashboard">
 
-                                        <Table />
-                                        {/* {!state.department.data && <Loading />}
+                                        {isLoading && <Loading/>}
 
-                                        {state.department.data && <>
+                                        {!isLoading && <>
                                             <div className="table-responsive">
-                                                <Table editDepartment={editDepartment} />
+                                                <Table editDepartment={editDepartment} deleteDepartment={deleteDepartment} />
                                             </div>
-                                        </>} */}
+                                        </>}
                                     </div>
                                 </div>
                             </div>

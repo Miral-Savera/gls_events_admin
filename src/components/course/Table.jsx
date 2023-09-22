@@ -18,39 +18,6 @@ function Table(props) {
         dispatch(fetchCourse());
     }, [location]);
 
-    // useEffect(() => {
-    //     const fetchDepartmentNames = async () => {
-    //         const promises = state.course.data.map(async (course) => {
-    //             try {
-    //                 const response = await axios({
-    //                     method: 'get',
-    //                     url: `${host}department/getdepartment/${course.dept_id}`,
-    //                     responseType: 'json',
-    //                     headers: { 'auth-token': localStorage.getItem('authtoken') },
-    //                 });
-    //                 return { id: course.dept_id, name: response.data.dept_name };
-    //             } catch (error) {
-    //                 console.error('Error fetching department:', error);
-    //                 return { id: course.dept_id, name: '' }; // Return an empty string if there's an error
-    //             }
-    //         });
-
-    //         const departmentNameResults = await Promise.all(promises);
-
-    //         // Create an object mapping department IDs to names
-    //         const departmentNameMap = {};
-    //         departmentNameResults.forEach((result) => {
-    //             departmentNameMap[result.id] = result.name;
-    //         });
-
-    //         setDepartmentNames(departmentNameMap);
-    //     };
-
-    //     if (state.course.data) {
-    //         fetchDepartmentNames();
-    //     }
-    // }, [state.course.data]);
-
     return (
         
         <table className="table table-striped table-bordered zero-configuration" id="deptTable">
