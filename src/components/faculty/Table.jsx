@@ -29,11 +29,12 @@ function Table(props) {
             </thead>
             <tbody>
                 {state.faculty.data && state.faculty.data.map( (faculty) => {
+                    const departmentName = props.departmentNames[faculty.department_faculty] || '';
                     return <tr key={facultyCount}>
                                 <td>{facultyCount++}</td>
                                 <td>{faculty.firstname + " " + faculty.lastname}</td>
                                 <td>{faculty.role}</td>
-                                <td>{faculty.department_faculty}</td>
+                                <td>{departmentName}</td>
                                 <td>
                                     <a href="#" className="btn btn-danger btn-sm" onClick={ () => {props.deleteDepartment(faculty._id)}}><i className="bi bi-trash3"></i></a> 
                                     <a href="#" className="btn btn-primary btn-sm mx-1" onClick={ () => {props.editDepartment(faculty._id)}}><i className="bi bi-pencil-square"></i></a>

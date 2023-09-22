@@ -28,7 +28,7 @@ function Navbar() {
                                         </span>
                                     </a>
                                     <div className="dropdown-menu dropdown-menu-right">
-                                        <div className="arrow_box_right"><a className="dropdown-item" href="/"><span className="avatar avatar-online"><img src="theme-assets/images/portrait/small/avatar-s-19.png" alt="avatar" /><span className="user-name text-bold-700 ml-1">John Doe</span></span></a>
+                                        <div className="arrow_box_right"><a className="dropdown-item" href="/"><span className="avatar avatar-online"><img src="../theme-assets/images/portrait/small/avatar-s-19.png" alt="avatar" /><span className="user-name text-bold-700 ml-1">John Doe</span></span></a>
                                             <div className="dropdown-divider"></div>
                                             <a className="dropdown-item" href="/"><i className="ft-user"></i> Edit Profile</a>
                                             <div className="dropdown-divider"></div><a className="dropdown-item" href='#' onClick={handleLogout}><i className="ft-power"></i> Logout</a>

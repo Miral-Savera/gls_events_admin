@@ -18,12 +18,47 @@ function Faculty() {
 
     const [faculty,setFaculty] = useState({id : "",firstname : "",lastname : "",email : "",phone : "",role : "",department_faculty : ""});
     const [isLoading, setIsLoading] = useState(true);
+    const [departmentNames, setDepartmentNames] = useState({});
 
     useEffect( () => {
         dispatch(fetchDepts());
         dispatch(fetchFaculty());
-        setIsLoading(false);
     },[location]);
+
+    useEffect(() => {
+        const fetchDepartmentNames = async () => {
+            try {
+                const promises = state.faculty.data.map(async (faculty) => {
+                    const response = await axios({
+                        method: 'get',
+                        url: `${host}department/getdepartment/${faculty.department_faculty}`,
+                        responseType: 'json',
+                        headers: { 'auth-token': localStorage.getItem('authtoken') },
+                    });
+                    return { id: faculty.department_faculty, name: response.data.dept_name };
+                });
+
+                const departmentNameResults = await Promise.all(promises);
+
+                const departmentNameMap = {};
+                departmentNameResults.forEach((result) => {
+                    departmentNameMap[result.id] = result.name;
+                });
+
+                setDepartmentNames(departmentNameMap);
+                setIsLoading(false);
+            } catch (error) {
+                console.error('Error fetching department:', error);
+                setIsLoading(false);
+            }
+        };
+
+        if (state.faculty.data) {
+            fetchDepartmentNames();
+        }
+    }, [state.faculty.data]);
+
+    console.log(departmentNames);
 
     const onChange = (e) => {
         setFaculty({...faculty,[e.target.name] : e.target.value});
@@ -34,13 +69,13 @@ function Faculty() {
         if(faculty.id !== null && faculty.id !== ""){
             await axios({
                 method: 'patch',
-                url: `${host}/faculty/updatefaculty/${faculty.id}`,
+                url: `${host}faculty/updatefaculty/${faculty.id}`,
                 responseType: 'json',
                 data : faculty,
             })
             .then(function (response) {
                 if(response.data._id&& response.data._id !== null){
-                    dispatch(fetchDepts());
+                    dispatch(fetchFaculty());
                     window.$('#facultyModal').modal('hide');
                     window.$('input').val(''); 
                     setFaculty({id:null}); 
@@ -58,7 +93,7 @@ function Faculty() {
             })
             .then(function (response) {
                 if(response.data._id && response.data._id != null){
-                    dispatch(fetchDepts());
+                    dispatch(fetchFaculty());
                     window.$('#facultyModal').modal('hide');
                     window.$('input').val(''); 
                     setFaculty({id:null}); 
@@ -69,7 +104,25 @@ function Faculty() {
         }
     }
 
-    const editDepartment = (id) => {
+    const editDepartment = async(id) => {
+
+        await axios({
+            method: 'get',
+            url: `${host}faculty/getfaculty/${id}`,
+            responseType: 'json',
+        })
+        .then(function (response) {
+            if(response.data._id && response.data._id != null){
+                setFaculty({id : response.data._id});
+                window.$('#facultyModal').modal('show');
+                window.$('#firstname').val(response.data.firstname);
+                window.$('#lastname').val(response.data.lastname);
+                window.$('#email').val(response.data.email);
+                window.$('#phone').val(response.data.phone);
+                window.$('#role').val(response.data.role);
+                window.$('#department_faculty').val(response.data.department_faculty);
+            }
+        });
 
     }
 
@@ -116,7 +169,7 @@ function Faculty() {
 
                                         {!isLoading && <>
                                             <div className="table-responsive">
-                                                <Table editDepartment={editDepartment} deleteDepartment={deleteDepartment} />
+                                                <Table editDepartment={editDepartment} deleteDepartment={deleteDepartment} departmentNames={departmentNames} />
                                             </div>
                                         </>}
                                     </div>
