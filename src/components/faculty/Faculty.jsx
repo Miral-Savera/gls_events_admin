@@ -1,19 +1,67 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Breadcrumbs from '../Breadcrumbs'
 import Table from './Table'
 import { useDispatch,useSelector } from "react-redux";
 import { fetchDepts } from '../../redux/slice/department';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function Faculty() {
 
     let location = useLocation();
     const dispatch = useDispatch(); 
     const state = useSelector((state) => state);
+    const host = "https://gls-events.onrender.com/admin/";
+
+    const [faculty,setFaculty] = useState({id : "",firstname : "",lastname : "",email : "",phone : "",role : "",department_faculty : ""});
 
     useEffect( () => {
         dispatch(fetchDepts());
     },[location]);
+
+    const onChange = (e) => {
+        setFaculty({...faculty,[e.target.name] : e.target.value});
+    }
+
+    const handleClick = async() => {
+        
+        if(faculty.id !== null && faculty.id !== ""){
+            await axios({
+                method: 'patch',
+                url: `${host}/faculty/updatefaculty/${faculty.id}`,
+                responseType: 'json',
+                data : faculty,
+            })
+            .then(function (response) {
+                if(response.data._id&& response.data._id !== null){
+                    // dispatch(fetchDepts());
+                    window.$('#facultyModal').modal('hide');
+                    window.$('input').val(''); 
+                    setFaculty({id:null}); 
+                    toast.success("Faculty Updated Successfully");
+                }
+            });
+        }
+        else{
+            await axios({
+                method: 'post',
+                url: `${host}faculty/add`,
+                responseType: 'json',
+                data : faculty,
+            })
+            .then(function (response) {
+                if(response.data._id && response.data._id != null){
+                    // dispatch(fetchDepts());
+                    window.$('#facultyModal').modal('hide');
+                    window.$('input').val(''); 
+                    setFaculty({id:null}); 
+                    toast.success("Faculty Added Successfully");
+                }
+            });
+        }
+
+    }
 
     return (
         <div>
@@ -71,31 +119,35 @@ function Faculty() {
                                     <div className="row">
                                         <div className="col-md-6">
                                             <label className='form-label'>Enter First-Name</label>
-                                            <input type='text' className='form-control' id='firstname' name='firstname' />
+                                            <input type='text' className='form-control' id='firstname' name='firstname' onChange={onChange} />
                                         </div>
                                         <div className="col-md-6">
                                             <label className='form-label'>Enter Last-Name</label>
-                                            <input type='text' className='form-control' id='lastname' name='lastname' />
+                                            <input type='text' className='form-control' id='lastname' name='lastname' onChange={onChange} />
                                         </div>
                                     </div>
                                     <div className="row mt-2">
                                         <div className="col-md-6">
                                             <label className='form-label'>Enter Email</label>
-                                            <input type='text' className='form-control' id='email' name='email' />
+                                            <input type='text' className='form-control' id='email' name='email' onChange={onChange} />
                                         </div>
                                         <div className="col-md-6">
-                                            <label className='form-label'>Enter Last-Name</label>
-                                            <input type='text' className='form-control' id='phone' name='phone' />
+                                            <label className='form-label'>Enter Phone</label>
+                                            <input type='text' className='form-control' id='phone' name='phone' onChange={onChange} />
                                         </div>
                                     </div>
                                     <div className="row mt-2">
                                         <div className="col-md-6">
                                             <label className='form-label'>Enter Role</label>
-                                            <input type='text' className='form-control' id='role' name='role' />
+                                            <select className='form-control' id="role" name='role' onChange={onChange}>
+                                                <option>Select Role</option>
+                                                <option value={"admin"}>Admin</option>
+                                                <option value={"coordinator"}>Coordinator</option>
+                                            </select>
                                         </div>
                                         <div className="col-md-6">
                                             <label className='form-label'>Enter Department</label>
-                                            <select className='form-control' id='dept_name' name='dept_name'>
+                                            <select className='form-control' id='department_faculty' name='department_faculty' onChange={onChange}>
                                                 <option>Select Department</option>
                                                 {state.department.data && state.department.data.map( (dept) => {
                                                     return <option key={dept._id} value={dept._id}>{dept.dept_name}</option>
@@ -107,7 +159,7 @@ function Faculty() {
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary">Save</button>
+                                <button type="button" className="btn btn-primary" onClick={handleClick}>Save</button>
                             </div>
                         </form>
                     </div>
