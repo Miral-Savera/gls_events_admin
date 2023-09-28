@@ -14,7 +14,7 @@ function Faculty() {
     let location = useLocation();
     const dispatch = useDispatch(); 
     const state = useSelector((state) => state);
-    const host = "https://leather-jacket-beetle.cyclic.cloud/admin/";
+    const host = "https://gls-events.onrender.com/admin/";
 
     const [faculty,setFaculty] = useState({id : "",firstname : "",lastname : "",email : "",phone : "",role : "",department_faculty : ""});
     const [isLoading, setIsLoading] = useState(true);
@@ -74,7 +74,7 @@ function Faculty() {
                 data : faculty,
             })
             .then(function (response) {
-                if(response.data._id && response.data._id !== null){
+                if(response.data._id&& response.data._id !== null){
                     dispatch(fetchFaculty());
                     window.$('#facultyModal').modal('hide');
                     window.$('input').val(''); 

@@ -11,7 +11,7 @@ function Login() {
         $('body').removeClass();
     });
 
-    const host = "https://leather-jacket-beetle.cyclic.cloud/";
+    const host = "https://gls-events.onrender.com/";
     const navigate = useNavigate();
     const[credential,setCredential] = useState({email : "",password : ""});
 

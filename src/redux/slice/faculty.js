@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const host = "https://leather-jacket-beetle.cyclic.cloud/admin/";
+const host = "https://gls-events.onrender.com/admin/";
 
 export const fetchFaculty = createAsyncThunk('fetchFaculty', async() => {
     const response = await fetch(`${host}faculty/getfaculty`);
