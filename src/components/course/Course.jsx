@@ -14,7 +14,7 @@ function Course() {
     
     const [course,setCourse] = useState({id : "",dept_id : "",course_name : ""});
     const [isLoading, setIsLoading] = useState(true);
-    const host = "https://gls-events.onrender.com/admin/";
+    const host = "https://leather-jacket-beetle.cyclic.cloud/admin/";
 
     let location = useLocation();
     const dispatch = useDispatch(); 

@@ -7,7 +7,7 @@ import axios from 'axios';
 function Table(props) {
 
     let facultyCount = 1;
-    const host = "https://gls-events.onrender.com/admin/";
+    const host = "https://leather-jacket-beetle.cyclic.cloud/admin/";
     
     let location = useLocation();
     const dispatch = useDispatch(); 

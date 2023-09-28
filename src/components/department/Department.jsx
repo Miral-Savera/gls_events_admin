@@ -12,7 +12,7 @@ import Loading from '../Loading';
 function Department(props) {
 
     const [dept, setDept] = useState({id:"",dept_name : "" });
-    const host = "https://gls-events.onrender.com/";
+    const host = "https://leather-jacket-beetle.cyclic.cloud/admin/";
 
     let location = useLocation();
     const dispatch = useDispatch(); 

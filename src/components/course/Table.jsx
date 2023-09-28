@@ -8,7 +8,7 @@ import Loading from '../Loading';
 function Table(props) {
     
     let course_count = 1;
-    const host = 'https://gls-events.onrender.com/admin/';
+    const host = 'https://leather-jacket-beetle.cyclic.cloud/admin/';
     let location = useLocation();
     const dispatch = useDispatch();
     const state = useSelector((state) => state);
