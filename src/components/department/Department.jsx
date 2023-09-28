@@ -7,15 +7,20 @@ import { toast } from 'react-toastify';
 import { useDispatch,useSelector } from "react-redux";
 import { fetchDepts } from '../../redux/slice/department';
 import { useLocation } from 'react-router-dom';
+import Loading from '../Loading';
 
 function Department(props) {
 
-    const [dept, setDept] = useState({ dept_name : "" });
+    const [dept, setDept] = useState({id:"",dept_name : "" });
     const host = "https://gls-events.onrender.com/";
 
     let location = useLocation();
     const dispatch = useDispatch(); 
     const state = useSelector((state) => state);
+
+    useEffect( () => {
+        dispatch(fetchDepts());
+    },[location]);
 
     $(function () {
         $(document).on('click','#deptbtn',function(){
@@ -30,20 +35,59 @@ function Department(props) {
     const hanleClick = async(e) => {
         e.preventDefault();
 
+        if(dept.id !== null && dept.id !== "" && dept.dept_name !== null){
+
+            await axios({
+                method: 'patch',
+                url: `${host}admin/department/updatedepartment/${dept.id}`,
+                responseType: 'json',
+                data : dept,
+            })
+            .then(function (response) {
+                if(response.data.dept_name && response.data.dept_name != null){
+                    dispatch(fetchDepts());
+                    window.$('#departmentModal').modal('hide');
+                    window.$('input').val(''); 
+                    setDept({id:null}); 
+                    toast.success("Department Updated Successfully");
+                }
+            });
+
+        }
+        else{
+
+            await axios({
+                method: 'post',
+                url: `${host}admin/department/add`,
+                responseType: 'json',
+                data : dept,
+            })
+            .then(function (response) {
+                if(response.data.dept_name && response.data.dept_name != null){
+                    dispatch(fetchDepts());
+                    window.$('#departmentModal').modal('hide');
+                    window.$('input').val('');   
+                    toast.success("Department Added Successfully");
+                }
+            });
+
+        }
+
+    }
+
+    const editDepartment = async(id) => {
+
         await axios({
-            method: 'post',
-            url: `${host}admin/department/add`,
+            method: 'get',
+            url: `${host}admin/department/getdepartment/${id}`,
             responseType: 'json',
-            data : dept,
+            headers: {'auth-token': localStorage.getItem('authtoken')}
         })
         .then(function (response) {
-            if(response.data.dept_name && response.data.dept_name != null){
-                dispatch(fetchDepts());
-                window.$('#departmentModal').modal('hide');
-                toast.success("Department Added Successfully");
-            }
+            window.$('#dept_name').val(response.data.dept_name);
+            setDept({id:response.data._id});
+            window.$('#departmentModal').modal('show');
         });
-
     }
 
     return (
@@ -73,16 +117,20 @@ function Department(props) {
                                     </div>
                                     <div className="card-content collapse show">
                                         <div className="card-body card-dashboard">
-                                            <div className="table-responsive">
-                                                <Table />
-                                            </div>
+                                            
+                                            {!state.department.data && <Loading />}
+
+                                            {state.department.data && <>
+                                                <div className="table-responsive">
+                                                    <Table editDepartment={editDepartment} />
+                                                </div>
+                                            </>}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </section>
-
                 </div>
             </div>
 
@@ -95,16 +143,18 @@ function Department(props) {
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <div className="modal-body">
-                            <div className='form-group'>
-                                <label className='form-label'>Enter Department Name</label>
-                                <input type="text" className="form-control" id="dept_name" name="dept_name" onChange={onChange} />
+                        <form id='deptForm'>
+                            <div className="modal-body">
+                                <div className='form-group'>
+                                    <label className='form-label'>Enter Department Name</label>
+                                    <input type="text" className="form-control" id="dept_name" name="dept_name" onChange={onChange} />
+                                </div>
                             </div>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" onClick={hanleClick}>Save</button>
-                        </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-primary" onClick={hanleClick}>Save</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

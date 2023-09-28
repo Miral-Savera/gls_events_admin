@@ -8,6 +8,7 @@ import Dashboard from './dashboard/Dashboard';
 import $ from "jquery";
 import Department from './department/Department';
 import Course from './course/Course';
+import Faculty from './faculty/Faculty';
 
 function Home() {
 
@@ -49,6 +50,7 @@ function Home() {
                             <Route exact path="/dashboard" element={<Dashboard/>} />
                             <Route exact path="/department" element={<Department/>} />
                             <Route exact path='/course' element={<Course/>} />
+                            <Route exact path='/faculty' element={<Faculty/>} />
                         </Routes>
                     </div>
                 </div>
