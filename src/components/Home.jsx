@@ -9,7 +9,10 @@ import $ from "jquery";
 import Department from './department/Department';
 import Course from './course/Course';
 import Faculty from './faculty/Faculty';
-
+import Eventtype from './Event_Types/Eventtype';
+import Eventlocation from './Events_Locations/Eventlocation';
+import Notification from './Notication/Notification';
+import Settings from './Settings/Settings';
 function Home() {
 
 	const navigate = useNavigate();
@@ -51,6 +54,11 @@ function Home() {
                             <Route exact path="/department" element={<Department/>} />
                             <Route exact path='/course' element={<Course/>} />
                             <Route exact path='/faculty' element={<Faculty/>} />
+                            <Route exact path='/eventtype' element={<Eventtype/>}></Route>
+                            <Route exact path="/eventlocation" element={<Eventlocation/>}></Route>
+                            <Route exact path="/notification" element={<Notification/>}></Route>
+                            <Route exact path="/settings" element={<Settings/>}></Route>
+                            
                         </Routes>
                     </div>
                 </div>

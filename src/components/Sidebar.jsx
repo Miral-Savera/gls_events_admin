@@ -29,6 +29,21 @@ function Sidebar() {
                         <li className={`nav-link ${location.pathname === "/admin/faculty" ? "active" : ""} `}>
                             <Link to="/admin/faculty"><i className="ft-users"></i><span className="menu-title" data-i18n="">Faculty</span></Link>
                         </li>
+                        <li className={`nav-link ${location.pathname === "/admin/eventtype" ? "active" : ""} `}>
+                            <Link to="/admin/eventtype"><i className="ft-users"></i><span className="menu-title" data-i18n="">Events Type</span></Link>
+                        </li>
+
+                        <li className={`nav-link ${location.pathname === "/admin/eventlocation" ? "active" : ""} `}>
+                            <Link to="/admin/eventlocation"><i className="ft-users"></i><span className="menu-title" data-i18n="">Events Location</span></Link>
+                        </li>
+                        <li className={`nav-link ${location.pathname === "/admin/notification" ? "active" : ""} `}>
+                            <Link to="/admin/notification"><i className="ft-users"></i><span className="menu-title" data-i18n="">Notification</span></Link>
+                        </li>
+
+                        <li className={`nav-link ${location.pathname === "/admin/settings" ? "active" : ""} `}>
+                            <Link to="/admin/settings"><i className="ft-users"></i><span className="menu-title" data-i18n="">Settings</span></Link>
+                        </li>
+                        
                     </ul>
                 </div>
                 <div className="navigation-background"></div>
