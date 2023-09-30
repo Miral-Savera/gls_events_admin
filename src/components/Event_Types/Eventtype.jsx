@@ -137,7 +137,7 @@ const Eventtype=()=>{
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title">New Course</h5>
+                            <h5 className="modal-title">New Event Type</h5>
                             <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
