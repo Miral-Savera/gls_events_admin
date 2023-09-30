@@ -6,12 +6,13 @@ const Table=(props)=>{
     let eventNotificationcount=1;
     return(
         <>
-             <table className="table table-striped table-bordered zero-configuration" id='deptTable'>
+             <table className="table table-striped table-bordered zero-configuration" id='notificationTable'>
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Subject</th>
                         <th>Description</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
