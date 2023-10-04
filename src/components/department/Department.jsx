@@ -68,7 +68,11 @@ function Department(props) {
                     window.$('#departmentModal').modal('hide');
                     window.$('input').val('');   
                     toast.success("Department Added Successfully");
+                    window.$('.error').html("");
                 }
+            }).catch(function (error){
+                var error = "<div class='alert alert-danger' role='alert'>"+error.response.data.error+"</div>";
+                window.$('.error').html(error);
             });
 
         }
@@ -145,6 +149,7 @@ function Department(props) {
                         </div>
                         <form id='deptForm'>
                             <div className="modal-body">
+                                <div className="error"></div>
                                 <div className='form-group'>
                                     <label className='form-label'>Enter Department Name</label>
                                     <input type="text" className="form-control" id="dept_name" name="dept_name" onChange={onChange} />
