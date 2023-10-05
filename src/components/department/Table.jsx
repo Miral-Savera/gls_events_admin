@@ -27,7 +27,9 @@ function Table(props) {
         .then(function (response) {
             dispatch(fetchDepts());
             toast.success("Department Deleted Successfully");
-        });  
+        }).catch(function (error){
+            toast.error(error.response.data.message);
+        });;  
     }
 
     return (

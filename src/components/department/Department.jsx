@@ -51,7 +51,10 @@ function Department(props) {
                     setDept({id:null}); 
                     toast.success("Department Updated Successfully");
                 }
-            });
+            }).catch(function (error){
+                var error = "<div class='alert alert-danger' role='alert'>"+error.response.data.message+"</div>";
+                window.$('.error').html(error);
+            });;
 
         }
         else{
@@ -71,7 +74,7 @@ function Department(props) {
                     window.$('.error').html("");
                 }
             }).catch(function (error){
-                var error = "<div class='alert alert-danger' role='alert'>"+error.response.data.error+"</div>";
+                var error = "<div class='alert alert-danger' role='alert'>"+error.response.data.message+"</div>";
                 window.$('.error').html(error);
             });
 
@@ -91,8 +94,14 @@ function Department(props) {
             window.$('#dept_name').val(response.data.dept_name);
             setDept({id:response.data._id});
             window.$('#departmentModal').modal('show');
+        }).catch(function (error){
+            toast.error(error.response.data.message);
         });
     }
+
+    window.$('#departmentModal').on('hidden.bs.modal', function () {
+        window.$('.error').html("");
+    })
 
     return (
 
