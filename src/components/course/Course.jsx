@@ -80,6 +80,9 @@ function Course() {
                     toast.success("Course Added Successfully");
                     dispatch(fetchCourse());
                 }
+            }).catch(function (error){
+                var error = "<div class='alert alert-danger' role='alert'>"+error.response.data.message+"</div>";
+                window.$('.error').html(error);
             });
 
         }
@@ -98,6 +101,9 @@ function Course() {
                     toast.success("Course Added Successfully");
                     dispatch(fetchCourse());
                 }
+            }).catch(function (error){
+                var error = "<div class='alert alert-danger' role='alert'>"+error.response.data.message+"</div>";
+                window.$('.error').html(error);
             });
         }
     }
@@ -114,8 +120,9 @@ function Course() {
                 toast.success("Course Deleted Successfully");
                 dispatch(fetchCourse());
             }
+        }).catch(function (error){
+            toast.error(error.response.data.message);
         });
-
     }
 
     const editDepartment = async(id) => {
@@ -131,6 +138,12 @@ function Course() {
             window.$('#courseModal').modal('show');
         });
     }
+
+    window.$('#courseModal').on('hidden.bs.modal', function () {
+        window.$('.error').html("");
+        window.$('input').val('');  
+        $('select').removeAttr('selected').find('option:first').attr('selected', 'selected');
+    });
 
     return (
         <div>
@@ -181,6 +194,7 @@ function Course() {
                             </button>
                         </div>
                         <div className="modal-body">
+                            <div className="error"></div>
                             <div className='form-group'>
                                 <label className='form-label'>Select Department</label>
                                 <select className='form-control' id='dept_id' name="dept_id" onChange={onChange}>

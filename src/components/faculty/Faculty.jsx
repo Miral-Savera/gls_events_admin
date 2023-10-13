@@ -82,6 +82,9 @@ function Faculty() {
                     toast.success("Faculty Updated Successfully");
                     setIsLoading(false);
                 }
+            }).catch(function (error){
+                var error = "<div class='alert alert-danger' role='alert'>"+error.response.data.message+"</div>";
+                window.$('.error').html(error);
             });
         }
         else{
@@ -100,6 +103,9 @@ function Faculty() {
                     toast.success("Faculty Added Successfully");
                     setIsLoading(false);
                 }
+            }).catch(function (error){
+                var error = "<div class='alert alert-danger' role='alert'>"+error.response.data.message+"</div>";
+                window.$('.error').html(error);
             });
         }
     }
@@ -137,6 +143,8 @@ function Faculty() {
                 dispatch(fetchFaculty());
                 toast.success("Faculty Deleted Successfully");
             }
+        }).catch(function (error){
+            toast.error(error.response.data.message);
         });
     }
 
@@ -191,6 +199,7 @@ function Faculty() {
                         </div>
                         <form id='deptForm'>
                             <div className="modal-body">
+                                <div className="error"></div>
                                 <div className='form-group'>
                                     <div className="row">
                                         <div className="col-md-6">

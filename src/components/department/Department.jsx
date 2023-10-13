@@ -54,7 +54,7 @@ function Department(props) {
             }).catch(function (error){
                 var error = "<div class='alert alert-danger' role='alert'>"+error.response.data.message+"</div>";
                 window.$('.error').html(error);
-            });;
+            });
 
         }
         else{
