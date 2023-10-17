@@ -39,6 +39,8 @@ function Login() {
             else{
                 toast.error(response.data.errors);
             }
+        }).catch(function (error){
+            navigate('/error');
         });
     }
 
