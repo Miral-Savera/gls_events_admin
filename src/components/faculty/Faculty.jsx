@@ -148,6 +148,13 @@ function Faculty() {
         });
     }
 
+    window.$('#facultyModal').on('hidden.bs.modal', function () {
+        window.$('.error').html("");
+        window.$('input').val("");
+        window.$("select").prop('selectedIndex',0);
+    });
+
+
     return (
         <div>
             <Breadcrumbs title="Faculty" />

@@ -41,6 +41,9 @@ const Eventtype=()=>{
                     setEventType({'id' : '','type_of_events' : ''});
                     toast.success("Event Type Updated Successfully");
                 }
+            }).catch(function (error){
+                var error = "<div class='alert alert-danger' role='alert'>"+error.response.data.message+"</div>";
+                window.$('.error').html(error);
             });
         }
         else{
@@ -58,6 +61,9 @@ const Eventtype=()=>{
                     setEventType({'id' : '','type_of_events' : ''});
                     toast.success("Event Type Added Successfully");
                 }
+            }).catch(function (error){
+                var error = "<div class='alert alert-danger' role='alert'>"+error.response.data.message+"</div>";
+                window.$('.error').html(error);
             });
         }
 
@@ -74,6 +80,8 @@ const Eventtype=()=>{
                 dispatch(fetchEventstype()); 
                 toast.success("Event Type Deleted Successfully");
             }
+        }).catch(function (error){
+            toast.error(error.response.data.message);
         });
     }
 
@@ -89,8 +97,16 @@ const Eventtype=()=>{
                 setEventType({'id' : response.data._id,'type_of_events' : response.data.type_of_events});
                 window.$('#eventTypeModal').modal('show');
             }
+        }).catch(function (error){
+            toast.error(error.response.data.message);
         });
     }
+
+    window.$('#eventTypeModal').on('hidden.bs.modal', function () {
+        window.$('.error').html("");
+        window.$('input').val("");
+    });
+
 
     return(
         <>
@@ -143,6 +159,7 @@ const Eventtype=()=>{
                             </button>
                         </div>
                         <div className="modal-body">
+                            <div className="error"></div>
                             <div className='form-group'>
                                 <label className='form-label'>Enter Event Type</label>
                                 <input type="text" className="form-control" id="type_of_events" name="type_of_events" onChange={onChange} />

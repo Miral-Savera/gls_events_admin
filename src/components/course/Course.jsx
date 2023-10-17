@@ -74,7 +74,7 @@ function Course() {
             })
             .then(function (response) {
                 if(response.data._id && response.data._id != null){
-                    $('select').removeAttr('selected').find('option:first').attr('selected', 'selected');
+                    window.$("select").prop('selectedIndex',0);
                     window.$('#courseModal').modal('hide');
                     window.$('input').val('');   
                     toast.success("Course Added Successfully");
@@ -95,7 +95,7 @@ function Course() {
             })
             .then(function (response) {
                 if(response.data._id && response.data._id != null){
-                    $('select').removeAttr('selected').find('option:first').attr('selected', 'selected');
+                    window.$("select").prop('selectedIndex',0);
                     window.$('#courseModal').modal('hide');
                     window.$('input').val('');   
                     toast.success("Course Added Successfully");
@@ -142,7 +142,7 @@ function Course() {
     window.$('#courseModal').on('hidden.bs.modal', function () {
         window.$('.error').html("");
         window.$('input').val('');  
-        $('select').removeAttr('selected').find('option:first').attr('selected', 'selected');
+        window.$("select").prop('selectedIndex',0);
     });
 
     return (

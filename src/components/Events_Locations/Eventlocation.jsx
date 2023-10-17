@@ -38,6 +38,9 @@ const Eventlocation = () => {
                     setEventLocation({'id' : '','location' : ''});
                     toast.success("Event Location Updated Successfully");
                 }
+            }).catch(function (error){
+                var error = "<div class='alert alert-danger' role='alert'>"+error.response.data.message+"</div>";
+                window.$('.error').html(error);
             });
         }
         else{
@@ -55,6 +58,9 @@ const Eventlocation = () => {
                     setEventLocation({'id' : '','location' : ''});
                     toast.success("Event Location Added Successfully");
                 }
+            }).catch(function (error){
+                var error = "<div class='alert alert-danger' role='alert'>"+error.response.data.message+"</div>";
+                window.$('.error').html(error);
             });
         }
 
@@ -71,6 +77,8 @@ const Eventlocation = () => {
                 setEventLocation({'id' : response.data._id,'location' : response.data.location});
                 window.$('#eventLocationModal').modal('show');
             }
+        }).catch(function (error){
+            toast.error(error.response.data.message);
         });
 
     }
@@ -86,9 +94,17 @@ const Eventlocation = () => {
                 dispatch(fetcheventlocation()); 
                 toast.success("Event Location Deleted Successfully");
             }
+        }).catch(function (error){
+            toast.error(error.response.data.message);
         });
 
     }
+
+    window.$('#eventLocationModal').on('hidden.bs.modal', function () {
+        window.$('.error').html("");
+        window.$('input').val("");
+    });
+
     return (
         <>
             <div>
@@ -140,6 +156,7 @@ const Eventlocation = () => {
                                 </button>
                             </div>
                             <div className="modal-body">
+                                <div className="error"></div>
                                 <div className='form-group'>
                                     <label className='form-label'>Enter Event Location</label>
                                     <input type="text" className="form-control" id="location" name="location" onChange={onChange} />
