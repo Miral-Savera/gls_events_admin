@@ -1,22 +1,28 @@
 import React, { useEffect } from 'react';
-import { useDispatch,useSelector } from "react-redux";
-import { fetchEvents } from "../../redux/slice/event";
 import { useLocation } from 'react-router-dom';
 import UpcomingEvents from './UpcomingEvents';
 import Breadcrumbs from '../Breadcrumbs';
+import { BarChart } from 'chartist';
 
 function Dashboard() {
 
     let location = useLocation();
-    const dispatch = useDispatch(); 
-    const state = useSelector((state) => state);
     useEffect( () => {
-        dispatch(fetchEvents());
-    },[location]);
 
-    if(state.event.isLoading){
-        return <h3>Loading.....</h3>;
-    }
+        new BarChart('#chart', {
+            labels: ['Jan', 'Feb', 'March', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct','Nov','Dec'],
+            series: [
+                [20,50,40,30,20,80,90,40,60,30,60,30]
+            ]
+        }, {
+            high: 100,
+            low: 10,
+            axisX: {
+                //labelInterpolationFnc: (value, index) => (index % 2 === 0 ? value : null)
+            }
+        });
+
+    },[location]);
 
     return (
         <>
@@ -32,6 +38,7 @@ function Dashboard() {
                             </div>
                             <div className="card-content collapse show">
                                 <div className="card-body">
+                                    <h3>10</h3>
                                 </div>
                             </div>
                         </div>
@@ -44,6 +51,7 @@ function Dashboard() {
                             </div>
                             <div className="card-content collapse show">
                                 <div className="card-body">
+                                    <h3>5</h3>
                                 </div>
                             </div>
                         </div>
@@ -56,7 +64,7 @@ function Dashboard() {
                             </div>
                             <div className="card-content collapse show">
                                 <div className="card-body">
-                                    
+                                    <h3>3</h3>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +77,7 @@ function Dashboard() {
                             </div>
                             <div className="card-content collapse show">
                                 <div className="card-body">
-                                    
+                                    <h3>3</h3>
                                 </div>
                             </div>
                         </div>
@@ -87,6 +95,7 @@ function Dashboard() {
                             </div>
                             <div className="card-content collapse show">
                                 <div className="card-body" style={{height:"325px"}}>
+                                    <div id="chart" style={{height:"300px"}}></div>
                                 </div>
                             </div>
                         </div>
